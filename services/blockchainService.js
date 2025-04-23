@@ -1,7 +1,7 @@
 const { ethers } = require('ethers');
 const Web3 = require('web3');
 const { Connection, PublicKey } = require('@solana/web3.js');
-const TronWeb = require('@tronweb3/tronweb');
+const { TronClient } = require('@tronscan/client');
 const blockchains = require('../config/blockchains');
 const fs = require('fs');
 const path = require('path');
@@ -39,16 +39,18 @@ Object.keys(blockchains).forEach(chain => {
         
       case 'tron':
         // For TRON network
-        const tronWeb = new TronWeb({
-          fullHost: chainConfig.rpcUrls[0],
+        const tronClient = new TronClient({
+          fullNode: chainConfig.rpcUrls[0],
+          solidityNode: chainConfig.rpcUrls[0],
+          eventServer: chainConfig.rpcUrls[0],
           headers: { "TRON-PRO-API-KEY": process.env.TRON_API_KEY }
         });
-        providers[chain] = tronWeb;
+        providers[chain] = tronClient;
         
         // If contract address exists for TRON, initialize contract
         const tronContractAddress = process.env.TRON_CONTRACT_ADDRESS;
         if (tronContractAddress) {
-          contracts[chain] = tronWeb.contract(contractABI, tronContractAddress);
+          contracts[chain] = tronClient.contract(contractABI, tronContractAddress);
         }
         break;
         
@@ -141,8 +143,8 @@ const blockchainService = {
           
         case 'tron':
           // For TRON network
-          const tronWeb = this.getProvider('tron');
-          const tronContract = await tronWeb.contract().at(tokenAddress);
+          const tronClient = this.getProvider('tron');
+          const tronContract = await tronClient.contract().at(tokenAddress);
           
           const trcName = await tronContract.name().call();
           const trcSymbol = await tronContract.symbol().call();
@@ -201,8 +203,8 @@ const blockchainService = {
           
         case 'tron':
           // For TRON network
-          const tronWeb = this.getProvider('tron');
-          return tronWeb.trx.verifyMessage(message, signature, address);
+          const tronClient = this.getProvider('tron');
+          return tronClient.trx.verifyMessage(message, signature, address);
           
         case 'solana':
           // Solana signature verification is more complex
