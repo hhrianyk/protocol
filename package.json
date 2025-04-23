@@ -28,7 +28,7 @@
     "@solana/web3.js": "^1.73.0",
     "@tronweb3/tronweb": "^4.4.0",
     "@polkadot/api": "^10.0.1",
-    "@polygon/web3-polygon": "^1.0.0",
+    "@maticnetwork/maticjs": "^3.4.0",
     "speakeasy": "^2.0.0",
     "qrcode-terminal": "^0.12.0",
     "winston": "^3.8.2",
