@@ -1,0 +1,264 @@
+/* Основные стили */
+:root {
+    --primary-color: #3375BB;
+    --secondary-color: #0B65C6;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --gray-color: #f4f4f4;
+    --text-color: #333;
+    --light-text: #777;
+    --white: #fff;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.logo img {
+    height: 40px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* Основное содержимое */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.screen {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Карточка */
+.card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.card p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--light-text);
+}
+
+/* Кнопки */
+.btn-primary, .btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-secondary {
+    background-color: var(--gray-color);
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+/* Загрузчик */
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Информация о токене */
+.token-info {
+    display: flex;
+    align-items: center;
+    background-color: var(--gray-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.token-icon {
+    flex: 0 0 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.token-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.token-details {
+    flex: 1;
+}
+
+.token-details h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.token-details p {
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: var(--light-text);
+}
+
+.address {
+    font-family: monospace;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+/* Сообщение для подписи */
+.message-to-sign {
+    margin: 20px 0;
+}
+
+.message-box {
+    background-color: var(--gray-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    font-family: monospace;
+    font-size: 14px;
+    word-break: break-all;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+/* Иконки успеха и ошибки */
+.success-icon, .error-icon {
+    font-size: 60px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.success-icon {
+    color: var(--success-color);
+}
+
+.error-icon {
+    color: var(--error-color);
+}
+
+/* Подвал */
+footer {
+    margin-top: 30px;
+    text-align: center;
+    padding: 20px 0;
+    color: var(--light-text);
+    font-size: 14px;
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+    .card {
+        padding: 20px;
+    }
+    
+    .token-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .token-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .token-details p {
+        text-align: center;
+    }
+} 

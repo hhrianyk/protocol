@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель администратора - Trust Wallet Token Import</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Боковая панель -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://trustwallet.com/assets/images/media/assets/trust_platform.svg" alt="Trust Wallet" class="logo">
+                <h1>Admin Panel</h1>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li data-page="dashboard" class="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Панель управления</span>
+                    </li>
+                    <li data-page="links">
+                        <i class="fas fa-link"></i>
+                        <span>Ссылки</span>
+                    </li>
+                    <li data-page="generate">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Создать ссылку</span>
+                    </li>
+                    <li data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Настройки</span>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Выйти</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Основное содержимое -->
+        <div class="main-content">
+            <!-- Верхняя панель -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button id="toggle-sidebar-btn" class="toggle-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 id="page-title">Панель управления</h2>
+                </div>
+                
+                <div class="topbar-right">
+                    <div class="user-info">
+                        <span id="user-name">Admin</span>
+                        <div class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Область содержимого -->
+            <div class="content-area">
+                <!-- Экран входа -->
+                <div id="login-page" class="page">
+                    <div class="login-container">
+                        <div class="login-form-container">
+                            <div class="login-header">
+                                <img src="https://trustwallet.com/assets/images/media/assets/trust_platform.svg" alt="Trust Wallet" class="login-logo">
+                                <h1>Admin Panel</h1>
+                            </div>
+                            
+                            <form id="login-form">
+                                <div class="form-group">
+                                    <label for="username">Имя пользователя</label>
+                                    <input type="text" id="username" name="username" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="password">Пароль</label>
+                                    <input type="password" id="password" name="password" required>
+                                </div>
+                                
+                                <div id="login-error" class="error-message hidden"></div>
+                                
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-sign-in-alt"></i> Войти
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Панель управления -->
+                <div id="dashboard-page" class="page hidden">
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Всего ссылок</h3>
+                                <p id="total-links">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Завершено</h3>
+                                <p id="completed-links">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon yellow">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>В ожидании</h3>
+                                <p id="pending-links">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon red">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Истекшие</h3>
+                                <p id="expired-links">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity">
+                        <h3>Последние активности</h3>
+                        <div class="activity-list" id="activity-list">
+                            <div class="empty-state">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Нет недавних активностей</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Страница ссылок -->
+                <div id="links-page" class="page hidden">
+                    <div class="page-header">
+                        <h3>Управление ссылками</h3>
+                        <div class="actions">
+                            <button id="refresh-links-btn" class="btn-secondary">
+                                <i class="fas fa-sync-alt"></i> Обновить
+                            </button>
+                            <button id="add-link-btn" class="btn-primary">
+                                <i class="fas fa-plus"></i> Создать ссылку
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>URL</th>
+                                    <th>Статус</th>
+                                    <th>Адрес пользователя</th>
+                                    <th>Создано</th>
+                                    <th>Истекает</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="links-table-body">
+                                <!-- Данные будут добавлены из JavaScript -->
+                            </tbody>
+                        </table>
+                        
+                        <div id="links-empty-state" class="empty-state hidden">
+                            <i class="fas fa-link"></i>
+                            <p>Нет доступных ссылок</p>
+                        </div>
+                        
+                        <div id="links-loading" class="loading-state">
+                            <div class="loader"></div>
+                            <p>Загрузка ссылок...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Страница создания ссылок -->
+                <div id="generate-page" class="page hidden">
+                    <div class="page-header">
+                        <h3>Создание новой ссылки</h3>
+                    </div>
+                    
+                    <div class="form-container">
+                        <button id="generate-link-btn" class="btn-primary">
+                            <i class="fas fa-magic"></i> Сгенерировать ссылку
+                        </button>
+                        
+                        <div id="generated-link-container" class="generated-link-container hidden">
+                            <h3>Ссылка создана</h3>
+                            
+                            <div class="qr-container">
+                                <img id="qr-code" src="" alt="QR-код">
+                            </div>
+                            
+                            <div class="link-details">
+                                <div class="form-group">
+                                    <label>URL для импорта</label>
+                                    <div class="input-with-copy">
+                                        <input type="text" id="generated-url" readonly>
+                                        <button id="copy-url-btn" class="btn-icon">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Срок действия</label>
+                                    <input type="text" id="expiration-time" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="link-actions">
+                                <button id="download-qr-btn" class="btn-secondary">
+                                    <i class="fas fa-download"></i> Скачать QR-код
+                                </button>
+                                <button id="create-another-link-btn" class="btn-primary">
+                                    <i class="fas fa-plus"></i> Создать еще одну ссылку
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Страница настроек -->
+                <div id="settings-page" class="page hidden">
+                    <div class="page-header">
+                        <h3>Настройки</h3>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-section">
+                            <h4>Общие настройки</h4>
+                            
+                            <div class="form-group">
+                                <label for="link-expiration">Срок действия ссылок (часы)</label>
+                                <input type="number" id="link-expiration" min="1" max="168" value="1">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="base-url">Базовый URL</label>
+                                <input type="text" id="base-url" value="http://localhost:4000">
+                            </div>
+                            
+                            <button id="save-settings-btn" class="btn-primary">
+                                <i class="fas fa-save"></i> Сохранить настройки
+                            </button>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h4>Сменить пароль</h4>
+                            
+                            <div class="form-group">
+                                <label for="current-password">Текущий пароль</label>
+                                <input type="password" id="current-password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="new-password">Новый пароль</label>
+                                <input type="password" id="new-password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirm-password">Подтвердите пароль</label>
+                                <input type="password" id="confirm-password">
+                            </div>
+                            
+                            <div id="password-error" class="error-message hidden"></div>
+                            
+                            <button id="change-password-btn" class="btn-primary">
+                                <i class="fas fa-key"></i> Сменить пароль
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для просмотра деталей ссылки -->
+    <div id="link-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Информация о ссылке</h3>
+                <button class="close-modal-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="link-info">
+                    <div class="info-group">
+                        <label>ID ссылки</label>
+                        <p id="modal-link-id"></p>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>URL</label>
+                        <div class="input-with-copy">
+                            <input type="text" id="modal-link-url" readonly>
+                            <button class="btn-icon copy-modal-url-btn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>Статус</label>
+                        <p id="modal-link-status"></p>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>Адрес пользователя</label>
+                        <p id="modal-user-address"></p>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>Дата создания</label>
+                        <p id="modal-created-at"></p>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>Срок действия</label>
+                        <p id="modal-expires-at"></p>
+                    </div>
+                </div>
+                
+                <div class="qr-container">
+                    <img id="modal-qr-code" src="" alt="QR-код">
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary close-modal-btn">Закрыть</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 

