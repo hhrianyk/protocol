@@ -1,11 +1,11 @@
 const request = require('supertest');
 const { expect } = require('chai');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Мокаем зависимости
 jest.mock('jsonwebtoken');
-jest.mock('bcrypt');
+jest.mock('bcryptjs');
 jest.mock('fs');
 jest.mock('web3');
 jest.mock('socket.io');
@@ -30,7 +30,7 @@ describe('API Tests', () => {
     
     // Мокаем функцию bcrypt.compareSync
     bcrypt.compareSync.mockImplementation((password, hash) => {
-      return password === 'admin123';
+      return password === 'admin123' && hash === ADMIN_HASH;
     });
     
     token = 'user-jwt-token';

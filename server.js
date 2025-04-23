@@ -11,7 +11,7 @@ const { ethers } = require('ethers');
 const Web3 = require('web3');
 const http = require('http');
 const socketIo = require('socket.io');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const fs = require('fs');
 
 // Загружаем переменные окружения
